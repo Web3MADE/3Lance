@@ -1,13 +1,6 @@
 "use client";
-import {
-  AppBar,
-  Avatar,
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Typography,
-} from "@mui/material";
+import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
+import AccountMenu from "./AccountMenu";
 
 export default function Navbar() {
   return (
@@ -24,9 +17,7 @@ export default function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             3Lance
           </Typography>
-          <Button color="inherit">
-            <Avatar />
-          </Button>
+          <AccountMenu />
         </Toolbar>
       </AppBar>
     </Box>
