@@ -17,7 +17,9 @@ export default function Home() {
           <CtaCard />
           <CtaCard />
         </Container>
-        <Footer />
+        <Box sx={{ mt: "6rem" }}>
+          <Footer />
+        </Box>
       </Box>
     </main>
   );
