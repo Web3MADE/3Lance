@@ -1,6 +1,7 @@
 "use client";
 import { Box, Container } from "@mui/material";
 import CtaCard from "../components/CtaCard";
+import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 
@@ -16,6 +17,7 @@ export default function Home() {
           <CtaCard />
           <CtaCard />
         </Container>
+        <Footer />
       </Box>
     </main>
   );
