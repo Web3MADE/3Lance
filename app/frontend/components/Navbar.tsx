@@ -1,6 +1,6 @@
 "use client";
 import { AppBar, Box, IconButton, Toolbar, Typography } from "@mui/material";
-import AccountMenu from "./AccountMenu";
+import AccountMenu from "./home/AccountMenu";
 
 export default function Navbar() {
   return (

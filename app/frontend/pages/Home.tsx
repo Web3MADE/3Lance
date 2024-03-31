@@ -1,9 +1,9 @@
 "use client";
 import { Box, Container } from "@mui/material";
-import CtaCard from "../components/CtaCard";
 import Footer from "../components/Footer";
-import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
+import CtaCard from "../components/home/CtaCard";
+import Hero from "../components/home/Hero";
 
 // id used to differentiate between different home pages (client/freelancer)?
 // TODO: create header component (3Lance, avatar login)
