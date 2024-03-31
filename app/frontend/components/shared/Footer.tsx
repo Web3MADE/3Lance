@@ -1,6 +1,6 @@
 import { Instagram, LinkedIn, Twitter } from "@mui/icons-material";
 import FacebookIcon from "@mui/icons-material/Facebook";
-import styles from "../styles/Footer.module.css";
+import styles from "../../styles/Footer.module.css";
 export default function Footer() {
   return (
     <footer className={styles.footer}>
