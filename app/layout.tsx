@@ -1,8 +1,5 @@
-import { Box } from "@mui/material";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Footer from "./frontend/components/shared/Footer";
-import Navbar from "./frontend/components/shared/Navbar";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,14 +16,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        <Box sx={{ minHeight: "100vh", maxWidth: "100%", overflow: "hidden" }}>
-          {children}
-        </Box>
-
-        <Footer />
-      </body>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

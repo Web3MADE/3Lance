@@ -1,6 +1,7 @@
 "use client";
 import { CheckBox } from "@mui/icons-material";
 import { Box, TextField } from "@mui/material";
+import Image from "next/image";
 import { useState } from "react";
 
 // Skeleton for now, need to study Ethereum Account abstraction for specifics
@@ -8,7 +9,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   return (
-    <Box sx={{ display: "flex" }}>
+    <Box sx={{ display: "flex", height: "100%" }}>
       <Box
         sx={{
           display: "flex",
@@ -37,8 +38,20 @@ export default function SignUp() {
         </Box>
       </Box>
 
-      <Box>
-        <h1>TEXT</h1>
+      <Box
+        sx={{
+          flex: 1,
+          display: "flex",
+        }}
+      >
+        <div style={{ position: "relative", width: "100%", height: "100%" }}>
+          <Image
+            src="/happyfreelancer.jpeg"
+            alt="Happy Freelancer"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
       </Box>
     </Box>
   );
