@@ -1,3 +1,4 @@
+"use client";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { useState } from "react";
 
