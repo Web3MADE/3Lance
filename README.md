@@ -41,3 +41,9 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 Notion link: https://www.notion.so/Day-1-29th-Mar-Architecture-pages-UX-Frontend-Designs-Marketing-FIRST-76d044ed28524d56a2f13c1e7a904349
 Cool footer CodePen: https://codepen.io/vipenl26/pen/VwzqMge
+
+## Day 2
+
+Skeleton UI (structural html & css) for the Home, SignUp and Profile pages have been created. Navbar and Footer skeletons are also there.
+
+The next step is to finish skeleton pages and then implement logic for Account Abstraction & save in AWS DynamoDB.
