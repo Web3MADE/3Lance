@@ -40,3 +40,4 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 ## Designs
 
 Notion link: https://www.notion.so/Day-1-29th-Mar-Architecture-pages-UX-Frontend-Designs-Marketing-FIRST-76d044ed28524d56a2f13c1e7a904349
+Cool footer CodePen: https://codepen.io/vipenl26/pen/VwzqMge
