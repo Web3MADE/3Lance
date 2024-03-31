@@ -9,7 +9,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
   return (
-    <Box sx={{ display: "flex", height: "100%" }}>
+    <Box sx={{ display: "flex", height: "100vh" }}>
       <Box
         sx={{
           display: "flex",
@@ -20,6 +20,7 @@ export default function SignUp() {
           alignItems: "center", // Center the content horizontally
         }}
       >
+        <h1>Sign Up</h1>
         <TextField
           variant="outlined"
           label="Email"
