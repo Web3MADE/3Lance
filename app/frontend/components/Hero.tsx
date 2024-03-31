@@ -9,12 +9,14 @@ export default function Hero() {
         <h1>3Lance</h1>
         <p>Find the perfect freelancer for your project.</p>
       </Box>
-      <Image
-        src="/web3freelancechillin.jpeg"
-        alt="freelancer chillin"
-        width={500}
-        height={300}
-      />
+      <Box sx={{ marginLeft: "auto" }}>
+        <Image
+          src="/web3freelancechillin.jpeg"
+          alt="freelancer chillin"
+          width={500}
+          height={300}
+        />
+      </Box>
     </Container>
   );
 }

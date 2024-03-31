@@ -1,5 +1,6 @@
 "use client";
-import { Box } from "@mui/material";
+import { Box, Container } from "@mui/material";
+import CtaCard from "../components/CtaCard";
 import Hero from "../components/Hero";
 import Navbar from "../components/Navbar";
 
@@ -11,6 +12,10 @@ export default function Home() {
       <Box sx={{ display: "flex", flexDirection: "column", gap: "6rem" }}>
         <Navbar />
         <Hero />
+        <Container sx={{ display: "flex", gap: "1.5rem" }}>
+          <CtaCard />
+          <CtaCard />
+        </Container>
       </Box>
     </main>
   );
