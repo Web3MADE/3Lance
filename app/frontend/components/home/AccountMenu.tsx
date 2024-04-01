@@ -1,9 +1,11 @@
 "use client";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { usePrivy } from "@privy-io/react-auth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function AccountMenu() {
+  const router = useRouter();
   const { ready, authenticated, login, logout } = usePrivy();
   // Disable login when Privy is not ready or the user is already authenticated
   const disableLogin = !ready || (ready && authenticated);
@@ -24,6 +26,14 @@ export default function AccountMenu() {
   }
   function handleClose() {
     setAnchorEl(null);
+  }
+
+  function handleProfile() {
+    router.push("/profile");
+  }
+
+  function handleJobBoard() {
+    router.push("/job-board");
   }
   return (
     <>
@@ -46,8 +56,8 @@ export default function AccountMenu() {
           </div>
         ) : (
           <div key={"not-authenticated"}>
-            <MenuItem>Dashboard</MenuItem>
-            <MenuItem>Profile</MenuItem>
+            <MenuItem onClick={handleJobBoard}>Job Board</MenuItem>
+            <MenuItem onClick={handleProfile}>Profile</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
           </div>
         )}
