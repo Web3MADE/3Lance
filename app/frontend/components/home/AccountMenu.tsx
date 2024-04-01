@@ -1,12 +1,22 @@
 "use client";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
+import { usePrivy } from "@privy-io/react-auth";
 import { useState } from "react";
 
 export default function AccountMenu() {
+  const { ready, authenticated, login } = usePrivy();
+  // Disable login when Privy is not ready or the user is already authenticated
+  const disableLogin = !ready || (ready && authenticated);
+
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
   function handleClick(event: React.MouseEvent<HTMLElement>) {
     setAnchorEl(event.currentTarget);
+  }
+
+  function handleLogin() {
+    login();
+    handleClose();
   }
   function handleClose() {
     setAnchorEl(null);
@@ -25,8 +35,18 @@ export default function AccountMenu() {
         onClick={handleClose}
       >
         {/* TODO: flags to show different options (logged in/out) */}
-        <MenuItem onClick={handleClose}>Create Account</MenuItem>
-        <MenuItem onClick={handleClose}>Login</MenuItem>
+        {!disableLogin ? (
+          <>
+            <MenuItem onClick={handleLogin}>Create Account</MenuItem>
+            <MenuItem onClick={handleLogin}>Login</MenuItem>
+          </>
+        ) : (
+          <>
+            <MenuItem>Dashboard</MenuItem>
+            <MenuItem>Profile</MenuItem>
+            <MenuItem>Logout</MenuItem>
+          </>
+        )}
       </Menu>
     </>
   );
