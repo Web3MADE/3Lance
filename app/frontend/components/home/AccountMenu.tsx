@@ -1,12 +1,14 @@
 "use client";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { usePrivy } from "@privy-io/react-auth";
+import { usePrivySmartAccount } from "@zerodev/privy";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function AccountMenu() {
   const router = useRouter();
   const { ready, authenticated, login, logout } = usePrivy();
+  const { zeroDevReady, user } = usePrivySmartAccount();
   // Disable login when Privy is not ready or the user is already authenticated
   const disableLogin = !ready || (ready && authenticated);
 
@@ -35,6 +37,8 @@ export default function AccountMenu() {
   function handleJobBoard() {
     router.push("/job-board");
   }
+  console.log("user", user);
+  console.log("chain id ");
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
