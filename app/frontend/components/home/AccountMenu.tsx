@@ -4,7 +4,7 @@ import { usePrivy } from "@privy-io/react-auth";
 import { useState } from "react";
 
 export default function AccountMenu() {
-  const { ready, authenticated, login } = usePrivy();
+  const { ready, authenticated, login, logout } = usePrivy();
   // Disable login when Privy is not ready or the user is already authenticated
   const disableLogin = !ready || (ready && authenticated);
 
@@ -16,6 +16,10 @@ export default function AccountMenu() {
 
   function handleLogin() {
     login();
+    handleClose();
+  }
+  function handleLogout() {
+    logout();
     handleClose();
   }
   function handleClose() {
@@ -36,16 +40,16 @@ export default function AccountMenu() {
       >
         {/* TODO: flags to show different options (logged in/out) */}
         {!disableLogin ? (
-          <>
+          <div key={"authenticated"}>
             <MenuItem onClick={handleLogin}>Create Account</MenuItem>
             <MenuItem onClick={handleLogin}>Login</MenuItem>
-          </>
+          </div>
         ) : (
-          <>
+          <div key={"not-authenticated"}>
             <MenuItem>Dashboard</MenuItem>
             <MenuItem>Profile</MenuItem>
-            <MenuItem>Logout</MenuItem>
-          </>
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          </div>
         )}
       </Menu>
     </>
