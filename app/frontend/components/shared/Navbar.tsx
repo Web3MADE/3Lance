@@ -4,7 +4,7 @@ import AccountMenu from "../home/AccountMenu";
 
 export default function Navbar() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flex: 0 }}>
       <AppBar position="static">
         <Toolbar>
           <IconButton
