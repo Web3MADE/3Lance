@@ -1,17 +1,12 @@
 "use client";
-import { Box, Button, Checkbox, TextField } from "@mui/material";
+
+import { Box, Button, TextField } from "@mui/material";
 import Image from "next/image";
 import { useState } from "react";
 
-// Skeleton for now, need to study Ethereum Account abstraction for specifics
-export default function SignUp() {
+export default function SignIn() {
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [checked, setChecked] = useState(false);
-
-  function handleChecked(event: React.ChangeEvent<HTMLInputElement>) {
-    setChecked(event.target.checked);
-  }
   return (
     <Box sx={{ display: "flex", height: "100vh" }}>
       <Box
@@ -24,7 +19,7 @@ export default function SignUp() {
           alignItems: "center",
         }}
       >
-        <h1>Sign Up</h1>
+        <h1>Log in</h1>
         <TextField
           variant="outlined"
           label="Email"
@@ -44,16 +39,7 @@ export default function SignUp() {
             alignItems: "center",
           }}
         >
-          <Box sx={{ display: "flex" }}>
-            <Checkbox
-              checked={checked}
-              onChange={handleChecked}
-              inputProps={{ "aria-label": "controlled" }}
-            />
-            <p>I have read and I accept the Terms of use.</p>
-          </Box>
-
-          <Button variant="contained">Confirm</Button>
+          <Button variant="contained">Log in</Button>
         </Box>
       </Box>
 
