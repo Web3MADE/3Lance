@@ -1,16 +1,31 @@
 "use client";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
-import { usePrivy } from "@privy-io/react-auth";
+import { usePrivySmartAccount } from "@zerodev/privy";
 import { useRouter } from "next/navigation";
-import { useCallback, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AccountMenu() {
   const router = useRouter();
-  const { login, logout } = usePrivy();
+  const {
+    ready,
+    authenticated,
+    user,
+    zeroDevReady,
+    sendTransaction,
+    login,
+    logout,
+  } = usePrivySmartAccount();
+  console.log("account menu ", user);
+
+  useEffect(() => {
+    if (ready && !authenticated) {
+      router.push("/sign-in");
+    }
+  }, [ready, authenticated, router]);
   // const { user, authenticated, login, logout, zeroDevReady } =
   //   usePrivySmartAccount();
   // // Disable login when Privy is not ready or the user is already authenticated
-  const disableLogin = false;
+  const disableLogin = !ready || authenticated || !zeroDevReady;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
@@ -18,15 +33,15 @@ export default function AccountMenu() {
     setAnchorEl(event.currentTarget);
   }
 
-  const handleLogin = useCallback(() => {
-    // login();
+  function handleLogin() {
+    login();
     handleClose();
-  }, []);
+  }
 
-  const handleLogout = useCallback(() => {
-    // logout();
+  function handleLogout() {
+    logout();
     handleClose();
-  }, []);
+  }
 
   function handleClose() {
     setAnchorEl(null);
