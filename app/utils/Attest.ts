@@ -6,7 +6,10 @@ import {
   reputationSchemaEncoder,
 } from "../config/EAS";
 
+// TODO:
 // On Successful User sign up, we will create a new reputation for the user
+// confirm this works in API from admin wallet
+// THEN integrate sponsored transactions = we need the user to DO the attestation from their private key, but with our gas
 export async function attestNewReputation(
   recipient: string,
   name: string,

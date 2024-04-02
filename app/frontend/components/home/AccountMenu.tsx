@@ -1,16 +1,16 @@
 "use client";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
 import { usePrivy } from "@privy-io/react-auth";
-import { usePrivySmartAccount } from "@zerodev/privy";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function AccountMenu() {
   const router = useRouter();
-  const { ready, authenticated, login, logout } = usePrivy();
-  const { zeroDevReady, user } = usePrivySmartAccount();
-  // Disable login when Privy is not ready or the user is already authenticated
-  const disableLogin = !ready || (ready && authenticated);
+  const { login, logout } = usePrivy();
+  // const { user, authenticated, login, logout, zeroDevReady } =
+  //   usePrivySmartAccount();
+  // // Disable login when Privy is not ready or the user is already authenticated
+  const disableLogin = false;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
@@ -18,14 +18,16 @@ export default function AccountMenu() {
     setAnchorEl(event.currentTarget);
   }
 
-  function handleLogin() {
-    login();
+  const handleLogin = useCallback(() => {
+    // login();
     handleClose();
-  }
-  function handleLogout() {
-    logout();
+  }, []);
+
+  const handleLogout = useCallback(() => {
+    // logout();
     handleClose();
-  }
+  }, []);
+
   function handleClose() {
     setAnchorEl(null);
   }
@@ -37,8 +39,8 @@ export default function AccountMenu() {
   function handleJobBoard() {
     router.push("/job-board");
   }
-  console.log("user", user);
-  console.log("chain id ");
+
+  console.log("Account Menu authenticated ");
   return (
     <>
       <Box sx={{ display: "flex", alignItems: "center", textAlign: "center" }}>
