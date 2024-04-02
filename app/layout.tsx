@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Web3Provider from "./frontend/providers/Web3Provider";
+import PrivyProvider from "./frontend/providers/PrivyProvider";
+import ZeroDevProvider from "./frontend/providers/ZeroDevProvider";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Web3Provider>{children}</Web3Provider>
+        <PrivyProvider>
+          <ZeroDevProvider>{children}</ZeroDevProvider>
+        </PrivyProvider>
       </body>
     </html>
   );
