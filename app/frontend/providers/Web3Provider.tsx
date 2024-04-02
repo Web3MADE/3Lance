@@ -12,8 +12,9 @@ export default function Web3Provider({
     !process.env.NEXT_PUBLIC_PRIVY_APP_ID ||
     !process.env.NEXT_PUBLIC_ZERODEV_PROJECT_ID
   ) {
-    console.error("app ID invalid");
-    return;
+    console.error("Privy App ID or ZeroDev Project ID invalid");
+    // Render a placeholder or loading indicator when conditions are not met
+    return <div>Set your ENV variables!...</div>;
   }
   return (
     <ZeroDevProvider
