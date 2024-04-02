@@ -47,3 +47,7 @@ Cool footer CodePen: https://codepen.io/vipenl26/pen/VwzqMge
 Skeleton UI (structural html & css) for the Home, SignUp and Profile pages have been created. Navbar and Footer skeletons are also there.
 
 The next step is to finish skeleton pages and then implement logic for Account Abstraction & save in AWS DynamoDB.
+
+## Day 3 & 4
+
+Skeleton UI finished & Privy login configured. Next steps are to implement Account Abstraction (understand how to fund paymaster) and implement a Schema for jobs with a resolver contract to handle payments upon completion.
