@@ -1,20 +1,23 @@
 "use client";
 import { Avatar, Box, IconButton, Menu, MenuItem } from "@mui/material";
-import { usePrivySmartAccount } from "@zerodev/privy";
+import { usePrivy } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function AccountMenu() {
   const router = useRouter();
-  const {
-    ready,
-    authenticated,
-    user,
-    zeroDevReady,
-    sendTransaction,
-    login,
-    logout,
-  } = usePrivySmartAccount();
+  // Smart account NOT needed for delegatedAttestation
+  // const {
+  //   ready,
+  //   authenticated,
+  //   user,
+  //   zeroDevReady,
+  //   sendTransaction,
+  //   login,
+  //   logout,
+  // } = usePrivySmartAccount();
+  const { ready, authenticated, user, login, logout } = usePrivy();
+
   console.log("account menu ", user);
 
   useEffect(() => {
@@ -25,7 +28,7 @@ export default function AccountMenu() {
   // const { user, authenticated, login, logout, zeroDevReady } =
   //   usePrivySmartAccount();
   // // Disable login when Privy is not ready or the user is already authenticated
-  const disableLogin = !ready || authenticated || !zeroDevReady;
+  const disableLogin = !ready || authenticated;
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const isOpen = Boolean(anchorEl);
