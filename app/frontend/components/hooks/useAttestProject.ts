@@ -1,27 +1,25 @@
-import { ContractTransaction, Signature } from "ethers";
 import { useState } from "react";
 // ethers populateTransaction creates an unsigned transaction for Gelato to sign and execute
 // the gelato request would be passed from frontend signer to this API
 export function useAttestProject() {
-  const [attestProject, setAttestProject] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<any>(null);
 
-  const fetchAttestProject = async (
-    signature: Signature,
-    unsignedTransaction: Promise<ContractTransaction>,
-    chainId: BigInt
+  const attestProject = async (
+    chainId: BigInt,
+    contractAddress: string,
+    unsignedTransaction: string
   ) => {
     setLoading(true);
     setError(null);
 
     try {
-      const response = await fetch("/api/account/project", {
+      const response = await fetch("/api/project", {
         method: "POST",
-        body: JSON.stringify({ signature, unsignedTransaction, chainId }),
+        body: JSON.stringify({ chainId, contractAddress, unsignedTransaction }),
       });
       const data = await response.json();
-      setAttestProject(data);
+      return data;
     } catch (error) {
       setError(error);
     }
@@ -29,5 +27,5 @@ export function useAttestProject() {
     setLoading(false);
   };
 
-  return { attestProject, loading, error, fetchAttestProject };
+  return { attestProject, loading, error };
 }

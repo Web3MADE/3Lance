@@ -22,8 +22,7 @@ import Navbar from "../shared/Navbar";
 const APPROVE_GELATO_MESSAGE = "I approve Gelato to attest on my behalf";
 export default function JobBoard() {
   // TODO: implement delegatedAttestation via Gelato for Job completion
-  const { fetchAttestProject, attestProject, loading, error } =
-    useAttestProject();
+  const { attestProject, loading, error } = useAttestProject();
   const { getSignature, isWalletReady, wallet } = useSignature();
 
   async function handleAttestProject() {
@@ -84,8 +83,15 @@ export default function JobBoard() {
         attester: mockCallData.attester,
         deadline: mockCallData.deadline,
       });
-
     console.log("populate transaction ", unsignedTransaction);
+
+    const attestResponse = await attestProject(
+      BigInt(OPTIMISM_SEPOLIA_CHAIN_ID),
+      EAS_OPTIMISM_SEPOLIA_ADDRESS,
+      unsignedTransaction
+    );
+
+    console.log("attestResponse", attestResponse);
   }
   return (
     <>

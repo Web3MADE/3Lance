@@ -1,4 +1,4 @@
-import { GelatoRelay } from "@gelatonetwork/relay-sdk";
+import { GelatoRelay, SponsoredCallRequest } from "@gelatonetwork/relay-sdk";
 import { NextApiResponse } from "next";
 import { NextResponse } from "next/server";
 
@@ -9,12 +9,26 @@ export async function POST(req: Request, res: NextApiResponse) {
   //TODO: Create EAS schema for project completion
   // Get address for OP Sepolia for EAS.sol and whitelist for Gelato to call
   try {
-    const data = await req.json();
-    const relay = new GelatoRelay();
+    if (!process.env.GELATO_API_KEY) {
+      throw new Error("Gelato API Key not found");
+    }
+    const { chainId, contractAddress, unsignedTransaction } = await req.json();
+    console.log("req body unsignedTransaction ", unsignedTransaction);
 
+    const relay = new GelatoRelay();
+    const request: SponsoredCallRequest = {
+      chainId,
+      target: contractAddress,
+      data: unsignedTransaction,
+    };
+
+    const relayResponse = await relay.sponsoredCall(
+      request,
+      process.env.GELATO_API_KEY
+    );
+    console.log("relayResponse ", relayResponse);
     // ethers populateTransaction creates an unsigned transaction for Gelato to sign and execute
     // the gelato request would be passed from frontend signer to this API
-    console.log("req body ", data);
 
     return NextResponse.json({ message: "Hello World" });
   } catch (error) {
