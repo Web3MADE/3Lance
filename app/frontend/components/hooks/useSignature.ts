@@ -17,5 +17,5 @@ export function useSignature() {
     return signature;
   };
 
-  return { getSignature, wallet };
+  return { getSignature, wallet, isWalletReady };
 }
