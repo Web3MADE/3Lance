@@ -31,19 +31,21 @@ export default function JobBoard() {
       console.error("wallet not ready");
       return;
     }
-    // TODO: I need the object signature, not just a string...
-    const signature = await getSignature(APPROVE_GELATO_MESSAGE);
-    const splitSignature = Signature.from(signature);
-    console.log("splitSignature", splitSignature);
 
+    const signature = await getSignature(APPROVE_GELATO_MESSAGE);
+    /** @dev split signature into v, r, s */
+    const splitSignature = Signature.from(signature);
+
+    /**@dev privy docs require switching to the current chain when using ethers directly */
     wallet.switchChain(OPTIMISM_SEPOLIA_CHAIN_ID);
     const signer = (await wallet.getEthersProvider()).getSigner();
     console.log("signer ", signer);
     const easContract = new ethers.Contract(
       EAS_OPTIMISM_SEPOLIA_ADDRESS,
       EAS_JSON.abi,
-      signer as unknown as ContractRunner // should be fine, since missing methods arent required for getting populateTransaction
+      signer as unknown as ContractRunner // This is fine, since missing methods arent required for getting populateTransaction response
     );
+    /**@dev No need to abi encode, just pass callData as normal object*/
     const mockCallData = {
       schema:
         "0x8e72f5bc0a8d4be6aa98360baa889040c50a0e51f32dbf0baa5199bd93472ebc",
@@ -62,7 +64,7 @@ export default function JobBoard() {
     };
 
     // pass delegatedRequest argument, matching the method definition from EAS_ABI.json
-    const { data: populateData } =
+    const { data: unsignedTransaction } =
       await easContract.attestByDelegation.populateTransaction({
         schema: mockCallData.schema,
         data: {
@@ -75,7 +77,6 @@ export default function JobBoard() {
           value: mockCallData.data.value,
         },
         signature: {
-          // Structure this as per the contract's expectations
           v: mockCallData.signature.v,
           r: mockCallData.signature.r,
           s: mockCallData.signature.s,
@@ -84,9 +85,7 @@ export default function JobBoard() {
         deadline: mockCallData.deadline,
       });
 
-    console.log("populate transaction ", populateData);
-
-    // How to get signature for EAS attestByDelegate?
+    console.log("populate transaction ", unsignedTransaction);
   }
   return (
     <>
