@@ -1,9 +1,15 @@
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
 import { ethers } from "ethers";
 
+export const TEST_SEPOLIA_ADDRESS =
+  "0x26a44E5bD991825Fe8AF2aa2E2e891E0926a37CC";
+export const SEPOLIA_EAS_ADDRESS = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e";
 export const EASContractAddress = "0x4200000000000000000000000000000000000021"; // Sepolia v0.26
 export const reputationSchemaEncoder = new SchemaEncoder(
   "uint256 eventId, uint8 voteIndex"
+);
+export const projectSchemaEncoder = new SchemaEncoder(
+  "bytes32 projectID, address Freelancer, bool isCompleted"
 );
 export const REPUTATION_SCHEMMA_UID =
   "0xe424edaa41e5d34616c96ffb272be778feeac090b3dceedadf7bfa7ee966a188";
