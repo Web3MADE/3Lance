@@ -3,6 +3,7 @@
 import {
   REPUTATION_SCHEMMA_UID,
   getEAS,
+  projectSchemaEncoder,
   reputationSchemaEncoder,
 } from "../config/EAS";
 
@@ -34,3 +35,13 @@ export async function attestNewReputation(
   console.log("new attestation UID: ", newAttestationUID);
   return newAttestationUID;
 }
+
+export const encodedProjectData = projectSchemaEncoder.encodeData([
+  { name: "projectID", value: "projectID", type: "bytes32" },
+  {
+    name: "Freelancer",
+    value: "0x6116ABf3445d8744bF78c8c7B322cD5A91613fbA",
+    type: "address",
+  },
+  { name: "isCompleted", value: true, type: "bool" },
+]);
