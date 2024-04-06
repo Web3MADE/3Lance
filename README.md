@@ -51,3 +51,17 @@ The next step is to finish skeleton pages and then implement logic for Account A
 ## Day 3 & 4
 
 Skeleton UI finished & Privy login configured. Next steps are to implement Account Abstraction (understand how to fund paymaster) and implement a Schema for jobs with a resolver contract to handle payments upon completion.
+
+### Gelato Experience
+
+Currently unable to perform sponsored transactions via GelatoSDK's `sponsoredCall()` method. For the EAS `attestByDelegation()` method, it doesn't work at all - I've asked in the Discord but had no response.
+
+So, I deployed a basic `Counter.sol` contract to test the `sponsoredCall()` GelatoSDK method on the `increment()` method. Whilst the transaction was `ExecSuccess`, the contract never actually interacted with the `Counter.sol` so I'm not sure what happened there...
+
+The steps for making a sponsoredCall for the attestByDelegation:
+
+1. Received a signature from the `useWallets()` hook from `PrivySDK`
+2. This signature string was split via `Signature.from()` from `ethers`
+3. The EAS Optimism sepolia contract address, ABI and the signer was passed to the `new ethers.Contract()` method to return an EAS contract instance.
+4. The EAS contract instance was used to receive an unsigned transaction from passing the `DelegatedAttestationRequest` argument into the `populateTransaction()` method.
+5. An API call was made to an endpoint containg the GelatoSDK. This is where the GelatoSDK would attempt to make a transaction but kept cancelling the requests, or in the case of the `Counter.sol` contract, did not interact with the contract at all and yet was `ExecSuccess`...
