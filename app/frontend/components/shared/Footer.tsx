@@ -1,56 +1,37 @@
+// Importing the necessary icons and styles
 import { Instagram, LinkedIn, Twitter } from "@mui/icons-material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import styles from "../../styles/Footer.module.css";
+
 export default function Footer() {
   return (
     <footer className={styles.footer}>
       <div className={styles.waves}>
-        {/* <div className={styles.wave} id="wave1"></div>
-        <div className={styles.wave} id="wave2"></div>
-        <div className={styles.wave} id="wave3"></div>
-        <div className={styles.wave} id="wave4"></div> */}
+        {/* Consider adding SVG or CSS-based waves here for visual flair */}
       </div>
       <ul className={styles["social-icon"]}>
         <li className={styles["social-icon__item"]}>
-          <FacebookIcon />
+          <a href="https://www.facebook.com" aria-label="Facebook">
+            <FacebookIcon />
+          </a>
         </li>
         <li className={styles["social-icon__item"]}>
-          <Twitter />
+          <a href="https://www.twitter.com" aria-label="Twitter">
+            <Twitter />
+          </a>
         </li>
         <li className={styles["social-icon__item"]}>
-          <LinkedIn />
+          <a href="https://www.linkedin.com" aria-label="LinkedIn">
+            <LinkedIn />
+          </a>
         </li>
         <li className={styles["social-icon__item"]}>
-          <Instagram />
-        </li>
-      </ul>
-      <ul className={styles.menu}>
-        <li className={styles["menu__item"]}>
-          <a className={styles["menu__link"]} href="#">
-            Home
-          </a>
-        </li>
-        <li className={styles["menu__item"]}>
-          <a className={styles["menu__link"]} href="#">
-            About
-          </a>
-        </li>
-        <li className={styles["menu__item"]}>
-          <a className={styles["menu__link"]} href="#">
-            Services
-          </a>
-        </li>
-        <li className={styles["menu__item"]}>
-          <a className={styles["menu__link"]} href="#">
-            Team
-          </a>
-        </li>
-        <li className={styles["menu__item"]}>
-          <a className={styles["menu__link"]} href="#">
-            Contact
+          <a href="https://www.instagram.com" aria-label="Instagram">
+            <Instagram />
           </a>
         </li>
       </ul>
+      <ul className={styles.menu}>{/* Link elements */}</ul>
       <p>&copy;2024 3Lance | All Rights Reserved</p>
     </footer>
   );

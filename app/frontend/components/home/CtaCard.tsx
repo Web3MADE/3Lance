@@ -1,8 +1,27 @@
-import { Button, Paper } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Typography,
+} from "@mui/material";
 
-export default function CtaCard() {
+interface CtaCardProps {
+  title: string;
+  description: string;
+  cta: string;
+  onClick: () => void;
+}
+
+export default function CtaCard({
+  title,
+  description,
+  cta,
+  onClick,
+}: CtaCardProps) {
   return (
-    <Paper
+    <Card
       sx={{
         display: "flex",
         flexDirection: "column",
@@ -10,12 +29,17 @@ export default function CtaCard() {
         gap: "1rem",
       }}
     >
-      <h2>Get Started</h2>
-      <p>Sign up as a client or freelancer to start working on your project.</p>
-
-      <Button sx={{ alignSelf: "start" }} variant="contained">
-        Attack NOW
-      </Button>
-    </Paper>
+      <CardHeader title={title} />
+      <CardContent>
+        <Typography variant="body2" component="div">
+          {description}
+        </Typography>
+      </CardContent>
+      <CardActions sx={{ padding: "1rem" }}>
+        <Button sx={{ alignSelf: "start" }} variant="contained">
+          {cta}
+        </Button>
+      </CardActions>
+    </Card>
   );
 }
