@@ -1,8 +1,5 @@
 "use client";
-import {
-  EAS_OPTIMISM_SEPOLIA_ADDRESS,
-  OPTIMISM_SEPOLIA_CHAIN_ID,
-} from "@/app/config/Constants";
+import { attestByDelegation, getEAS } from "@/app/config/EAS";
 import {
   Box,
   Button,
@@ -12,8 +9,7 @@ import {
   CardHeader,
   Typography,
 } from "@mui/material";
-import { ContractRunner, Signature, ethers } from "ethers";
-import { EAS_JSON } from "../../../config/EAS-ABI";
+import { useCallback } from "react";
 import { useAttestProject } from "../hooks/useAttestProject";
 import { useSignature } from "../hooks/useSignature";
 import Footer from "../shared/Footer";
@@ -25,74 +21,36 @@ export default function JobBoard() {
   const { attestProject, loading, error } = useAttestProject();
   const { getSignature, isWalletReady, wallet } = useSignature();
 
-  async function handleAttestProject() {
+  const handleAttestByDelegation = useCallback(async () => {
     if (!isWalletReady) {
       console.error("wallet not ready");
       return;
     }
 
-    const signature = await getSignature(APPROVE_GELATO_MESSAGE);
-    /** @dev split signature into v, r, s */
-    const splitSignature = Signature.from(signature);
+    if (!process.env.NEXT_PUBLIC_ADMIN_PRIVATE_KEY) {
+      console.error("No admin private key found");
+      return;
+    }
 
-    /**@dev privy docs require switching to the current chain when using ethers directly */
-    wallet.switchChain(OPTIMISM_SEPOLIA_CHAIN_ID);
-    const signer = (await wallet.getEthersProvider()).getSigner();
-    console.log("signer ", signer);
-    const easContract = new ethers.Contract(
-      EAS_OPTIMISM_SEPOLIA_ADDRESS,
-      EAS_JSON.abi,
-      signer as unknown as ContractRunner // This is fine, since missing methods arent required for getting populateTransaction response
-    );
-    /**@dev No need to abi encode, just pass callData as normal object*/
-    const mockCallData = {
-      schema:
-        "0x8e72f5bc0a8d4be6aa98360baa889040c50a0e51f32dbf0baa5199bd93472ebc",
-      data: {
-        recipient: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-        expirationTime: 1673891048,
-        revocable: true,
-        refUID:
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-        data: "0x1234",
-        value: 0,
-      },
-      signature: splitSignature,
-      attester: "0xc5E8740aD971409492b1A63Db8d83025e0Fc427e",
-      deadline: 1673891048,
-    };
-
-    // pass delegatedRequest argument, matching the method definition from EAS_ABI.json
-    const { data: unsignedTransaction } =
-      await easContract.attestByDelegation.populateTransaction({
-        schema: mockCallData.schema,
-        data: {
-          // Ensure this matches the structure expected by the smart contract
-          recipient: mockCallData.data.recipient,
-          expirationTime: mockCallData.data.expirationTime,
-          revocable: mockCallData.data.revocable,
-          refUID: mockCallData.data.refUID,
-          data: mockCallData.data.data,
-          value: mockCallData.data.value,
-        },
-        signature: {
-          v: mockCallData.signature.v,
-          r: mockCallData.signature.r,
-          s: mockCallData.signature.s,
-        },
-        attester: mockCallData.attester,
-        deadline: mockCallData.deadline,
-      });
-    console.log("populate transaction ", unsignedTransaction);
-
-    const attestResponse = await attestProject(
-      BigInt(OPTIMISM_SEPOLIA_CHAIN_ID),
-      EAS_OPTIMISM_SEPOLIA_ADDRESS,
-      unsignedTransaction
+    const { eas } = getEAS(process.env.NEXT_PUBLIC_ADMIN_PRIVATE_KEY);
+    const signature = await getSignature(
+      "I approve 3Lance to attest on my behalf"
     );
 
-    console.log("attestResponse", attestResponse);
-  }
+    if (!signature || !eas) {
+      console.error("no signature or eas ", signature, eas);
+      return;
+    }
+
+    await attestByDelegation(
+      eas,
+      signature,
+      wallet.address,
+      "0x6116ABf3445d8744bF78c8c7B322cD5A91613fbA",
+      true
+    );
+  }, [getSignature, isWalletReady, wallet.address]);
+
   return (
     <>
       <Navbar />
@@ -121,7 +79,7 @@ export default function JobBoard() {
             </Typography>
 
             <CardActions>
-              <Button size="small" onClick={handleAttestProject}>
+              <Button size="small" onClick={handleAttestByDelegation}>
                 Attest Project
               </Button>
             </CardActions>
