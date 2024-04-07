@@ -58,6 +58,10 @@ export default function AccountMenu() {
     router.push("/job-board");
   }
 
+  function handleHome() {
+    router.push("/");
+  }
+
   console.log("Account Menu authenticated ");
   return (
     <>
@@ -80,6 +84,7 @@ export default function AccountMenu() {
           </div>
         ) : (
           <div key={"not-authenticated"}>
+            <MenuItem onClick={handleHome}>Home</MenuItem>
             <MenuItem onClick={handleJobBoard}>Job Board</MenuItem>
             <MenuItem onClick={handleProfile}>Profile</MenuItem>
             <MenuItem onClick={handleLogout}>Logout</MenuItem>
