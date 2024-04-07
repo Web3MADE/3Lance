@@ -65,3 +65,13 @@ The steps for making a sponsoredCall for the attestByDelegation:
 3. The EAS Optimism sepolia contract address, ABI and the signer was passed to the `new ethers.Contract()` method to return an EAS contract instance.
 4. The EAS contract instance was used to receive an unsigned transaction from passing the `DelegatedAttestationRequest` argument into the `populateTransaction()` method.
 5. An API call was made to an endpoint containg the GelatoSDK. This is where the GelatoSDK would attempt to make a transaction but kept cancelling the requests, or in the case of the `Counter.sol` contract, did not interact with the contract at all and yet was `ExecSuccess`...
+
+### Attestation UX flow
+
+1. Client creates job posting (deploys new schema) & Freelancer attests to applying (off-chain attestation). The parameters set are Difficulty (discretion of client), deadline and required skills (dynamically encoded data).
+2. Client is notified of Freelancer’s request and accepts it, this verifies the off-chain attestation on-chain and starting the job.
+3. Freelancer attests project is finished, project flagged as completed.
+4. Client needs to attest to its completion. By passing in the refUID of previous attestation from Freelancer.
+5. The Resolver will check to see if the recipient and attester from both attestations are the Client & isComplete = true. If it is, then send payment to Freelancer’s wallet.
+
+There would also be a schema that gets registered on sign-up (reputation schema), which receives an attestation on successful completion, and thereby increasing their reputation score.
