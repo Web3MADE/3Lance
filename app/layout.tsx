@@ -1,5 +1,7 @@
+import { ThemeProvider } from "@mui/material";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { theme } from "./config/theme";
 import PrivyProvider from "./frontend/providers/PrivyProvider";
 import ZeroDevProvider from "./frontend/providers/ZeroDevProvider";
 import "./globals.css";
@@ -20,7 +22,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ZeroDevProvider>
-          <PrivyProvider>{children}</PrivyProvider>
+          <PrivyProvider>
+            <ThemeProvider theme={theme}>{children}</ThemeProvider>
+          </PrivyProvider>
         </ZeroDevProvider>
       </body>
     </html>

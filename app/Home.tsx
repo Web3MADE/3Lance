@@ -1,5 +1,5 @@
 "use client";
-import { Box, Button, Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import CtaCard from "./frontend/components/home/CtaCard";
 import Hero from "./frontend/components/home/Hero";
 import Footer from "./frontend/components/shared/Footer";
@@ -23,11 +23,10 @@ export default function Home() {
 
   return (
     <main>
-      <Box sx={{ display: "flex", flexDirection: "column", gap: "6rem" }}>
+      <Box sx={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
         <Navbar />
         <Hero />
         <Container sx={{ display: "flex", gap: "1.5rem" }}>
-          <Button variant="contained">Attest reputation</Button>
           <CtaCard />
           <CtaCard />
         </Container>
