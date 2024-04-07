@@ -1,23 +1,14 @@
 "use client";
 import { attestByDelegation, getEAS } from "@/app/config/EAS";
-import {
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { useCallback } from "react";
 import { useAttestProject } from "../hooks/useAttestProject";
 import { useSignature } from "../hooks/useSignature";
 import Footer from "../shared/Footer";
 import Navbar from "../shared/Navbar";
+import JobCard from "./JobCard";
 
-const APPROVE_GELATO_MESSAGE = "I approve Gelato to attest on my behalf";
 export default function JobBoard() {
-  // TODO: implement delegatedAttestation via Gelato for Job completion
   const { attestProject, loading, error } = useAttestProject();
   const { getSignature, isWalletReady, wallet } = useSignature();
 
@@ -54,39 +45,34 @@ export default function JobBoard() {
   return (
     <>
       <Navbar />
-      <Box
+      {/**@dev Container is ideal for page level container due to default padding */}
+      <Container
         sx={{
           display: "flex",
           flexDirection: "column",
-          minHeight: "100vh",
-
+          height: "100vh",
           justifyContent: "center",
         }}
       >
-        <Card
+        <Box>
+          <Typography variant="h4">Job Postings</Typography>
+        </Box>
+        <Box
           sx={{
-            flex: "1",
-            width: "50%",
-            maxHeight: "300px",
-            alignContent: "center",
+            display: "flex",
+            gap: "1rem",
+            alignItems: "center",
+            mt: 2,
           }}
         >
-          <CardHeader title="Web3 Fullstack Engineer"></CardHeader>
-          <CardContent>
-            <Typography variant="body2" component="div">
-              Job posting for Web3 fullstack Engineer. Specializing in React,
-              Solidity, and Account Abstraction.
-            </Typography>
+          <JobCard onClick={handleAttestByDelegation} />
+          <JobCard onClick={handleAttestByDelegation} />
+          <JobCard onClick={handleAttestByDelegation} />
+          <JobCard onClick={handleAttestByDelegation} />
+        </Box>
+      </Container>
 
-            <CardActions>
-              <Button size="small" onClick={handleAttestByDelegation}>
-                Attest Project
-              </Button>
-            </CardActions>
-          </CardContent>
-        </Card>
-      </Box>
-      <Box sx={{ mt: "auto" }}>
+      <Box sx={{ mt: 4 }}>
         <Footer />
       </Box>
     </>
