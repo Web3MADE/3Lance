@@ -1,6 +1,15 @@
 "use client";
 import { attestByDelegation, getEAS } from "@/app/config/EAS";
-import { Box, Container, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardHeader,
+  Container,
+  Typography,
+} from "@mui/material";
 import { useCallback } from "react";
 import { useAttestProject } from "../hooks/useAttestProject";
 import { useSignature } from "../hooks/useSignature";
@@ -52,8 +61,28 @@ export default function JobBoard() {
           flexDirection: "column",
           height: "100vh",
           justifyContent: "center",
+          gap: "1rem",
         }}
       >
+        <Box sx={{ width: "50%" }}>
+          <Card>
+            <CardHeader title="Ready for work?" />
+            <CardContent
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+              }}
+            >
+              <CardActions
+                sx={{ display: "flex", justifyContent: "flex-start", pl: 0 }}
+              >
+                <Button sx={{ padding: 0 }}>Post a Job</Button>
+              </CardActions>
+            </CardContent>
+          </Card>
+        </Box>
+
         <Box>
           <Typography variant="h4">Job Postings</Typography>
         </Box>

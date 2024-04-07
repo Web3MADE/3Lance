@@ -14,7 +14,14 @@ interface JobCardProps {
 
 export default function JobCard({ onClick }: JobCardProps) {
   return (
-    <Card>
+    <Card
+      sx={{
+        ":hover": {
+          boxShadow: 10,
+          cursor: "pointer",
+        },
+      }}
+    >
       <CardHeader title="Web3 Fullstack Engineer"></CardHeader>
       <CardContent
         sx={{
