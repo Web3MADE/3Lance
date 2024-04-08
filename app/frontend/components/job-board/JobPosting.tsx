@@ -1,5 +1,4 @@
 "use client";
-import { PROJECT_SCHEMA_UID } from "@/app/config/EAS";
 import {
   Button,
   Chip,
@@ -13,7 +12,10 @@ import {
   TextField,
 } from "@mui/material";
 import * as React from "react";
-import { useRegisterJobSchema } from "../hooks/useRegisterJobSchema";
+import {
+  IJobSchemaData,
+  useRegisterJobSchema,
+} from "../hooks/useRegisterJobSchema";
 
 export default function JobPosting() {
   const { registerJobSchema, loading, error } = useRegisterJobSchema();
@@ -76,13 +78,15 @@ export default function JobPosting() {
     console.log("deadline ", timestampInSeconds);
     console.log("skills ", skills);
     console.log("difficulty ", difficulty);
-    // TODO: create utility func to dynamically construct schema & encode it for
-    const uid = await registerJobSchema(
-      PROJECT_SCHEMA_UID,
-      "0x6116ABf3445d8744bF78c8c7B322cD5A91613fbA",
-      "0x01AC39c918EB812190bcB186A438b629CbFaf128",
-      "encoded"
-    );
+    const jobSchemaData: IJobSchemaData = {
+      // TODO: generate bytes32 via ethers
+      projectID: { type: "bytes32", name: "1" },
+      difficulty: difficulty,
+      deadline: { type: "uint256", name: timestampInSeconds },
+      skills: skills,
+    };
+
+    const uid = await registerJobSchema(jobSchemaData);
 
     // await attestJob("schemaUID", "freelancer", "client", "encodedData")
   }

@@ -69,6 +69,9 @@ The steps for making a sponsoredCall for the attestByDelegation:
 ### Attestation UX flow
 
 1. Client creates job posting (deploys new schema) & Freelancer attests to applying (off-chain attestation). The parameters set are Difficulty (discretion of client), deadline and required skills (dynamically encoded data).
+
+To continue after ICP hackathon: Get the UID from the newly registered schema & save in DB/return to UI - then continue flow implementation.
+
 2. Client is notified of Freelancer’s request and accepts it, this verifies the off-chain attestation on-chain and starting the job.
 3. Freelancer attests project is finished, project flagged as completed.
 4. Client needs to attest to its completion. By passing in the refUID of previous attestation from Freelancer.

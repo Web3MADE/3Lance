@@ -1,4 +1,8 @@
-import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
+import {
+  EAS,
+  SchemaEncoder,
+  SchemaRegistry,
+} from "@ethereum-attestation-service/eas-sdk";
 import { ethers } from "ethers";
 
 export const TEST_SEPOLIA_ADDRESS =
@@ -15,6 +19,10 @@ export const REPUTATION_SCHEMMA_UID =
   "0xe424edaa41e5d34616c96ffb272be778feeac090b3dceedadf7bfa7ee966a188";
 export const PROJECT_SCHEMA_UID =
   "0xa300fdbeaa89c0fa9cd14e47ab5fd9300b00ce2ced58b4b99d2d578a72a6dfb3";
+
+const schemaRegistryContractAddress =
+  "0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0";
+
 export function getEAS(privateKey: string) {
   // Initialize the sdk with the address of the EAS Schema contract address
   const eas = new EAS(SEPOLIA_EAS_ADDRESS);
@@ -36,6 +44,30 @@ export function getEAS(privateKey: string) {
   // Step 2: setup attestByDelegation
 
   return { eas, provider, signer };
+}
+
+export async function registerSchema(privateKey: string, schema: string) {
+  const schemaRegistry = new SchemaRegistry(schemaRegistryContractAddress);
+
+  const provider = new ethers.JsonRpcProvider(
+    "https://sepolia.infura.io/v3/4b3d75730534458fae28fd4746bdc560"
+  );
+  const signer = new ethers.Wallet(privateKey, provider);
+
+  schemaRegistry.connect(signer);
+
+  const resolverAddress = "TODO RESOLVER LOGIC";
+  const revocable = true;
+
+  const transaction = await schemaRegistry.register({
+    schema,
+    revocable,
+  });
+
+  // Optional: Wait for transaction to be validated
+  await transaction.wait();
+
+  return transaction;
 }
 
 export async function attestByDelegation(
