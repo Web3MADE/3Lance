@@ -13,8 +13,6 @@ import {
 import { useCallback } from "react";
 import { useAttestProject } from "../hooks/useAttestProject";
 import { useSignature } from "../hooks/useSignature";
-import Footer from "../shared/Footer";
-import Navbar from "../shared/Navbar";
 import JobCard from "./JobCard";
 
 export default function JobBoard() {
@@ -53,7 +51,6 @@ export default function JobBoard() {
 
   return (
     <>
-      <Navbar />
       {/**@dev Container is ideal for page level container due to default padding */}
       <Container
         sx={{
@@ -66,7 +63,7 @@ export default function JobBoard() {
       >
         <Box sx={{ width: "50%" }}>
           <Card>
-            <CardHeader title="Ready for work?" />
+            <CardHeader title="Need a Freelancer?" />
             <CardContent
               sx={{
                 display: "flex",
@@ -100,10 +97,6 @@ export default function JobBoard() {
           <JobCard onClick={handleAttestByDelegation} />
         </Box>
       </Container>
-
-      <Box sx={{ mt: 4 }}>
-        <Footer />
-      </Box>
     </>
   );
 }
