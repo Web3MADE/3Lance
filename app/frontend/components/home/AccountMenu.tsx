@@ -4,6 +4,7 @@ import { usePrivy } from "@privy-io/react-auth";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
+/**@dev AccountMenu tracks user authenticated state throughout app */
 export default function AccountMenu() {
   const router = useRouter();
   // Smart account NOT needed for delegatedAttestation
