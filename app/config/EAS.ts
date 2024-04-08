@@ -1,5 +1,5 @@
 import { EAS, SchemaEncoder } from "@ethereum-attestation-service/eas-sdk";
-import { Signature, ethers } from "ethers";
+import { ethers } from "ethers";
 
 export const TEST_SEPOLIA_ADDRESS =
   "0x26a44E5bD991825Fe8AF2aa2E2e891E0926a37CC";
@@ -40,7 +40,7 @@ export function getEAS(privateKey: string) {
 
 export async function attestByDelegation(
   eas: EAS,
-  signature: Signature,
+  // signature: Signature,
   freelancer: string,
   client: string,
   isCompleted: boolean
@@ -48,7 +48,7 @@ export async function attestByDelegation(
   const encodedData = projectSchemaEncoder.encodeData([
     {
       name: "ProjectID",
-      value: "",
+      value: "1",
       type: "bytes32",
     },
     { name: "Freelancer", value: freelancer, type: "address" },

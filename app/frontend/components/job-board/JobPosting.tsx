@@ -12,8 +12,10 @@ import {
   TextField,
 } from "@mui/material";
 import * as React from "react";
+import { useAttestJob } from "../hooks/useAttestJob";
 
 export default function JobPosting() {
+  const { attestJob } = useAttestJob();
   const [difficulty, setDifficulty] = React.useState("");
   const [deadline, setDeadline] = React.useState("");
   const [skills, setSkills] = React.useState([]);
@@ -40,6 +42,19 @@ export default function JobPosting() {
     );
   };
 
+  async function handleSubmit(event: React.FormEvent) {
+    event.preventDefault();
+    const res = await fetch("/api/job", {
+      method: "POST",
+    });
+    console.log("res ", res);
+
+    // await attestJob("schemaUID", "freelancer", "client", "encodedData")
+  }
+  // TODO: Add submissin logic to register EAS Schema for Job
+  // create resolver contract logic to only send payment of completion from both parties
+  // Then from mocked JobCard, add a button to apply for job (automatically approves & attests)
+  // Freelancer attests completion of job
   return (
     <Container maxWidth="sm">
       <h1>Post a Job</h1>
@@ -116,6 +131,7 @@ export default function JobPosting() {
           variant="contained"
           color="primary"
           type="submit"
+          onClick={handleSubmit}
           style={{ marginTop: "20px" }}
         >
           Post Job
