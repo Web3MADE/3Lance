@@ -1,4 +1,5 @@
 "use client";
+import { PROJECT_SCHEMA_UID } from "@/app/config/EAS";
 import {
   Button,
   Chip,
@@ -12,12 +13,16 @@ import {
   TextField,
 } from "@mui/material";
 import * as React from "react";
-import { useAttestJob } from "../hooks/useAttestJob";
+import { useRegisterJobSchema } from "../hooks/useRegisterJobSchema";
 
 export default function JobPosting() {
-  const { attestJob } = useAttestJob();
-  const [difficulty, setDifficulty] = React.useState("");
-  const [deadline, setDeadline] = React.useState("");
+  const { registerJobSchema, loading, error } = useRegisterJobSchema();
+  const [difficulty, setDifficulty] = React.useState({
+    type: "bool",
+    name: "Expert",
+  });
+  // ExpirationTime field
+  const [deadline, setDeadline] = React.useState<string>();
   const [skills, setSkills] = React.useState([]);
 
   const availableSkills = [
@@ -29,7 +34,7 @@ export default function JobPosting() {
   ];
 
   const handleChangeDifficulty = (event: SelectChangeEvent) => {
-    setDifficulty(event.target.value);
+    setDifficulty({ ...difficulty, name: event.target.value });
   };
 
   const handleChangeSkills = (event: any) => {
@@ -42,12 +47,31 @@ export default function JobPosting() {
     );
   };
 
+  function handleDeadline(event: React.ChangeEvent<HTMLInputElement>) {
+    const { value } = event.target;
+
+    setDeadline(value);
+  }
+
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    const res = await fetch("/api/job", {
-      method: "POST",
-    });
-    console.log("res ", res);
+    if (!deadline || !skills || !difficulty) {
+      console.error("missing required fields ", deadline, skills, difficulty);
+      return;
+    }
+
+    const timestampInSeconds = Math.floor(new Date(deadline).getTime() / 1000);
+
+    console.log("deadline ", timestampInSeconds);
+    console.log("skills ", skills);
+    console.log("difficulty ", difficulty);
+    // TODO: create utility func to dynamically construct schema & encode it for
+    const uid = await registerJobSchema(
+      PROJECT_SCHEMA_UID,
+      "0x6116ABf3445d8744bF78c8c7B322cD5A91613fbA",
+      "0x01AC39c918EB812190bcB186A438b629CbFaf128",
+      "encoded"
+    );
 
     // await attestJob("schemaUID", "freelancer", "client", "encodedData")
   }
@@ -55,6 +79,7 @@ export default function JobPosting() {
   // create resolver contract logic to only send payment of completion from both parties
   // Then from mocked JobCard, add a button to apply for job (automatically approves & attests)
   // Freelancer attests completion of job
+
   return (
     <Container maxWidth="sm">
       <h1>Post a Job</h1>
@@ -80,12 +105,12 @@ export default function JobPosting() {
           <Select
             labelId="difficulty-select-label"
             id="difficulty-select"
-            value={difficulty}
+            value={difficulty.name}
             label="Difficulty"
             onChange={handleChangeDifficulty}
             required
           >
-            <MenuItem value="Entry Level">Entry Level</MenuItem>
+            <MenuItem value="Junior">Junior</MenuItem>
             <MenuItem value="Intermediate">Intermediate</MenuItem>
             <MenuItem value="Expert">Expert</MenuItem>
           </Select>
@@ -98,7 +123,7 @@ export default function JobPosting() {
           variant="outlined"
           InputLabelProps={{ shrink: true }}
           value={deadline}
-          onChange={(e) => setDeadline(e.target.value)}
+          onChange={handleDeadline}
           required
         />
         <FormControl fullWidth margin="normal">
