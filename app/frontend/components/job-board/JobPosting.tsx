@@ -23,14 +23,19 @@ export default function JobPosting() {
   });
   // ExpirationTime field
   const [deadline, setDeadline] = React.useState<string>();
-  const [skills, setSkills] = React.useState([]);
+  const [skills, setSkills] = React.useState([
+    {
+      type: "string",
+      name: "Web Development",
+    },
+  ]);
 
   const availableSkills = [
-    "Web Development",
-    "Graphic Design",
-    "Fullstack Web3 Development",
-    "Solidity Development",
-    "Frontend Development",
+    { type: "Web Development", name: "Web Development" },
+    { type: "Graphic Design", name: "Graphic Design" },
+    { type: "Fullstack Web3 Development", name: "Fullstack Web3 Development" },
+    { type: "Solidity Development", name: "Solidity Development" },
+    { type: "Frontend Development", name: "Frontend Development" },
   ];
 
   const handleChangeDifficulty = (event: SelectChangeEvent) => {
@@ -41,10 +46,16 @@ export default function JobPosting() {
     const {
       target: { value },
     } = event;
-    setSkills(
-      // On autofill we get a stringified value.
-      typeof value === "string" ? value.split(",") : value
+    console.log("value ", value);
+    console.log("Skills: ", skills);
+    const selectedSkill = value[value.length - 1];
+    const skillAlreadyExists = skills.find(
+      (skill) => skill.name === selectedSkill
     );
+
+    if (skillAlreadyExists) return;
+
+    setSkills((prev) => [...prev, { type: "string", name: selectedSkill }]);
   };
 
   function handleDeadline(event: React.ChangeEvent<HTMLInputElement>) {
@@ -140,14 +151,14 @@ export default function JobPosting() {
             renderValue={(selected) => (
               <div>
                 {selected.map((value) => (
-                  <Chip key={value} label={value} />
+                  <Chip key={value.name} label={value.name} />
                 ))}
               </div>
             )}
           >
             {availableSkills.map((skill) => (
-              <MenuItem key={skill} value={skill}>
-                {skill}
+              <MenuItem key={skill.name} value={skill.name}>
+                {skill.name}
               </MenuItem>
             ))}
           </Select>
