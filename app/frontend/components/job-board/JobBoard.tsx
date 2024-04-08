@@ -10,12 +10,14 @@ import {
   Container,
   Typography,
 } from "@mui/material";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { useAttestProject } from "../hooks/useAttestProject";
 import { useSignature } from "../hooks/useSignature";
 import JobCard from "./JobCard";
 
 export default function JobBoard() {
+  const router = useRouter();
   const { attestProject, loading, error } = useAttestProject();
   const { getSignature, isWalletReady, wallet } = useSignature();
 
@@ -49,6 +51,10 @@ export default function JobBoard() {
     );
   }, [getSignature, isWalletReady, wallet.address]);
 
+  function handleJobPosting() {
+    router.push("/job-board/post-job");
+  }
+
   {
     /**@dev Container is ideal for page level container due to default padding */
   }
@@ -75,7 +81,9 @@ export default function JobBoard() {
             <CardActions
               sx={{ display: "flex", justifyContent: "flex-start", pl: 0 }}
             >
-              <Button sx={{ padding: 0 }}>Post a Job</Button>
+              <Button sx={{ padding: 0 }} onClick={handleJobPosting}>
+                Post a Job
+              </Button>
             </CardActions>
           </CardContent>
         </Card>
