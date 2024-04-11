@@ -64,9 +64,6 @@ export async function registerSchema(privateKey: string, schema: string) {
     revocable,
   });
 
-  // Optional: Wait for transaction to be validated
-  await transaction.wait();
-
   return transaction;
 }
 

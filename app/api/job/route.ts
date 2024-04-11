@@ -16,11 +16,16 @@ export async function POST(req: Request, res: Response) {
       jobSchemaData.difficulty,
       jobSchemaData.projectID,
     ]);
-    const txh = await registerSchema(process.env.ADMIN_PRIVATE_KEY, schema);
-    // TODO: get UID from emitted logs & then save UID to DB/return to UI
-    console.log("txh res", txh);
+    console.log("constructed schema ", schema);
+    const transaction = await registerSchema(
+      process.env.ADMIN_PRIVATE_KEY,
+      schema
+    );
+    // Wait for the transaction to be mined
+    const uid = await transaction.wait();
+    console.log("uid ", uid);
 
-    return NextResponse.json({ txh });
+    return NextResponse.json({ uid });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ message: "Error" });

@@ -87,6 +87,7 @@ export default function JobPosting() {
     };
 
     const uid = await registerJobSchema(jobSchemaData);
+    console.log("uid ", uid);
 
     // await attestJob("schemaUID", "freelancer", "client", "encodedData")
   }
