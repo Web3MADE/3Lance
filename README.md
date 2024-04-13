@@ -73,6 +73,8 @@ The steps for making a sponsoredCall for the attestByDelegation:
 To continue after ICP hackathon: Get the UID from the newly registered schema & save in DB/return to UI - then continue flow implementation.
 
 2. Client is notified of Freelancer’s request and accepts it, this verifies the off-chain attestation on-chain and starting the job.
+   How to get all active jobs? Use Postgres to store active jobs only (with schemaUID), then the freelancer can attest to starting the job using this schemaUID.
+
 3. Freelancer attests project is finished, project flagged as completed.
 4. Client needs to attest to its completion. By passing in the refUID of previous attestation from Freelancer.
 5. The Resolver will check to see if the recipient and attester from both attestations are the Client & isComplete = true. If it is, then send payment to Freelancer’s wallet.
