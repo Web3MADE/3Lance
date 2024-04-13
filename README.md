@@ -80,3 +80,15 @@ To continue after ICP hackathon: Get the UID from the newly registered schema & 
 5. The Resolver will check to see if the recipient and attester from both attestations are the Client & isComplete = true. If it is, then send payment to Freelancer’s wallet.
 
 There would also be a schema that gets registered on sign-up (reputation schema), which receives an attestation on successful completion, and thereby increasing their reputation score.
+
+## Postgres
+
+The User data is stored on Postgres (hosted on Vercel) and uses Prisma as the ORM.
+
+Defining a new Schema is simple:
+
+1. Define Models in `schema.prisma`
+2. Run `pnpm prisma generate`
+3. Then, run `pnpm prisma migrate dev --name sync-schema`
+
+The last command synchronises the Postgres DB with the schema defined you have just defined in the code.
