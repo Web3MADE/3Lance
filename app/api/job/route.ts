@@ -1,5 +1,5 @@
 import { registerSchema } from "@/app/config/EAS";
-import { constructSchema } from "@/app/utils/schema";
+import { constructSchema } from "@/app/utils/Schema";
 import { NextResponse } from "next/server";
 // LATER: typecast params
 export async function POST(req: Request, res: Response) {
