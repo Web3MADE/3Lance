@@ -9,8 +9,8 @@ datasource db {
 
 model User {
     id              Int      @id @default(autoincrement()) // Maps to user_id in PostgreSQL
-    username        String   @unique
-    email           String   @unique
+    username        String?   @unique
+    email           String?   @unique
     ethereumAddress String   @unique
     jobs            Job[]
     createdAt       DateTime @default(now())
