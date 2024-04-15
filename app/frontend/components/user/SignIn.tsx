@@ -11,12 +11,11 @@ export default function SignIn() {
   const { login } = useLogin({
     onComplete: async (user, isNewUser, wasAlreadyAuthenticated) => {
       if (isNewUser) {
-        const payload = {
-          ethereumAddress: user.wallet?.address || "",
-        };
         await fetch("/api/signup", {
           method: "POST",
-          body: JSON.stringify(payload),
+          body: JSON.stringify({
+            id: user.wallet?.address || "",
+          }),
           headers: {
             "Content-Type": "application/json",
           },

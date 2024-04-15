@@ -11,6 +11,7 @@ import {
   SelectChangeEvent,
   TextField,
 } from "@mui/material";
+import { useWallets } from "@privy-io/react-auth";
 import * as React from "react";
 import {
   IJobSchemaData,
@@ -18,6 +19,7 @@ import {
 } from "../hooks/useRegisterJobSchema";
 
 export default function JobPosting() {
+  const { ready: isWalletReady, wallets } = useWallets();
   const { registerJobSchema, loading, error } = useRegisterJobSchema();
   const [difficulty, setDifficulty] = React.useState({
     type: "bool",
@@ -68,7 +70,7 @@ export default function JobPosting() {
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (!deadline || !skills || !difficulty) {
+    if (!deadline || !skills || !difficulty || !isWalletReady) {
       console.error("missing required fields ", deadline, skills, difficulty);
       return;
     }
@@ -80,6 +82,7 @@ export default function JobPosting() {
     console.log("difficulty ", difficulty);
     const jobSchemaData: IJobSchemaData = {
       // TODO: generate bytes32 via ethers
+      ownerAddress: wallets[0].address,
       projectID: { type: "bytes32", name: "1" },
       difficulty: difficulty,
       deadline: { type: "uint256", name: timestampInSeconds },

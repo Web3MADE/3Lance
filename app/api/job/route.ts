@@ -1,5 +1,6 @@
 import { registerSchema } from "@/app/config/EAS";
 import { constructSchema } from "@/app/utils/Schema";
+import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 // LATER: typecast params
 export async function POST(req: Request, res: Response) {
@@ -9,7 +10,6 @@ export async function POST(req: Request, res: Response) {
     }
     const { jobSchemaData } = await req.json();
     console.log("req body params ", jobSchemaData);
-    // construct schema
     const schema = constructSchema([
       ...jobSchemaData.skills,
       jobSchemaData.deadline,
@@ -22,10 +22,14 @@ export async function POST(req: Request, res: Response) {
       schema
     );
     // Wait for the transaction to be mined
-    const uid = await transaction.wait();
-    console.log("uid ", uid);
+    const schemaUID = await transaction.wait();
 
-    return NextResponse.json({ uid });
+    await sql`
+      INSERT INTO "Job" ("title", "description", "freelancerId", "id") 
+      VALUES ('Testtitle', 'TestDescription', ${jobSchemaData.ownerAddress}, ${schemaUID})
+      `;
+
+    return NextResponse.json({ schemaUID });
   } catch (e) {
     console.error(e);
     return NextResponse.json({ message: "Error" });

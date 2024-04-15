@@ -8,22 +8,20 @@ datasource db {
 }
 
 model User {
-    id              Int      @id @default(autoincrement()) // Maps to user_id in PostgreSQL
+    id              String    @id @unique // wallet address
     username        String?   @unique
     email           String?   @unique
-    ethereumAddress String   @unique
     jobs            Job[]
     createdAt       DateTime @default(now())
 }
 
 model Job {
-    id          Int      @id @default(autoincrement()) // Maps to job_id in PostgreSQL
+    id          String      @id @unique // Schema UID 
     title       String
     description String
-    budget      Float
+    budget      Float?
     status      String   @default("open")
-    client      User     @relation(fields: [clientId], references: [id])
-    clientId    Int
-    jobSchemaUID String
+    freelancer  User     @relation(fields: [freelancerId], references: [id])
+    freelancerId String  
     createdAt   DateTime @default(now())
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 export interface IJobSchemaData {
+  ownerAddress: string;
   projectID: {};
   difficulty: {};
   deadline: {};
