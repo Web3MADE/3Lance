@@ -92,3 +92,5 @@ Defining a new Schema is simple:
 3. Then, run `pnpm prisma migrate dev --name sync-schema`
 
 The last command synchronises the Postgres DB with the schema defined you have just defined in the code.
+
+For simplicity, 1 wallet = 1 user.
