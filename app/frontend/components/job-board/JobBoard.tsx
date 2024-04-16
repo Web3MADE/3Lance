@@ -12,11 +12,19 @@ import {
 import { useRouter } from "next/navigation";
 import JobCard from "./JobCard";
 
-export default function JobBoard() {
+interface IJobBoard {
+  jobs: any[];
+}
+
+export default function JobBoard({ jobs }: IJobBoard) {
   const router = useRouter();
 
   function handleJobPosting() {
     router.push("/job-board/post-job");
+  }
+
+  function handleJobClick() {
+    // trigger modal to show job details & deposit eth on attestation
   }
 
   {
@@ -59,15 +67,21 @@ export default function JobBoard() {
       <Box
         sx={{
           display: "flex",
+          flexDirection: "column",
           gap: "1rem",
           alignItems: "center",
           mt: 2,
         }}
       >
-        <JobCard onClick={() => {}} />
-        <JobCard onClick={() => {}} />
-        <JobCard onClick={() => {}} />
-        <JobCard onClick={() => {}} />
+        {jobs.map((job) => (
+          <JobCard
+            key={job.id}
+            title={job.title}
+            offer={job.description}
+            price={job.price}
+            onClick={handleJobClick}
+          />
+        ))}
       </Box>
     </Container>
   );

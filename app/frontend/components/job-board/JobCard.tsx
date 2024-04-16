@@ -1,4 +1,4 @@
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import { Money } from "@mui/icons-material";
 import SignalCellularAltIcon from "@mui/icons-material/SignalCellularAlt";
 import {
   Box,
@@ -10,10 +10,20 @@ import {
   Typography,
 } from "@mui/material";
 interface JobCardProps {
+  title: string;
+  price: number;
+  offer?: string;
+  skills?: string[];
   onClick: () => void;
 }
 
-export default function JobCard({ onClick }: JobCardProps) {
+export default function JobCard({
+  title,
+  price,
+  offer,
+  skills,
+  onClick,
+}: JobCardProps) {
   return (
     <Card
       sx={{
@@ -24,7 +34,7 @@ export default function JobCard({ onClick }: JobCardProps) {
       }}
     >
       <CardActionArea onClick={onClick}>
-        <CardHeader title="Web3 Fullstack Engineer"></CardHeader>
+        <CardHeader title={title}></CardHeader>
         <CardContent
           sx={{
             display: "flex",
@@ -33,8 +43,7 @@ export default function JobCard({ onClick }: JobCardProps) {
           }}
         >
           <Typography variant="body2" component="div">
-            Job posting for Web3 fullstack Engineer. Specializing in React,
-            Solidity, and Account Abstraction...
+            {offer}
           </Typography>
 
           <CardActions
@@ -47,8 +56,10 @@ export default function JobCard({ onClick }: JobCardProps) {
             }}
           >
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <AccessTimeIcon sx={{ fontSize: "12px" }} />
-              <Typography sx={{ fontSize: "12px" }}>Today</Typography>
+              <Money sx={{ fontSize: "12px" }} />
+              <Typography sx={{ fontSize: "12px" }}>
+                {price.toString()} ETH
+              </Typography>
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <SignalCellularAltIcon sx={{ fontSize: "12px" }} />
