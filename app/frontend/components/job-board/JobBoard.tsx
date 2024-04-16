@@ -23,7 +23,8 @@ export default function JobBoard({ jobs }: IJobBoard) {
     router.push("/job-board/post-job");
   }
 
-  function handleJobClick() {
+  function handleJobClick(id: string) {
+    router.push(`/job-board/${id}/job-summary`);
     // trigger modal to show job details & deposit eth on attestation
   }
 
@@ -79,7 +80,7 @@ export default function JobBoard({ jobs }: IJobBoard) {
             title={job.title}
             offer={job.description}
             price={job.price}
-            onClick={handleJobClick}
+            onClick={() => handleJobClick(job.id)}
           />
         ))}
       </Box>
