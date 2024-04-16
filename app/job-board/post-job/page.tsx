@@ -1,5 +1,5 @@
-import JobPosting from "@/app/frontend/components/job-board/JobPosting";
+import PostFreelanceJob from "@/app/frontend/components/job-board/PostFreelanceJob";
 
 export default function page() {
-  return <JobPosting />;
+  return <PostFreelanceJob />;
 }

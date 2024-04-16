@@ -2,10 +2,13 @@ import { useState } from "react";
 
 export interface IJobSchemaData {
   ownerAddress: string;
-  projectID: {};
-  difficulty: {};
-  deadline: {};
-  skills: {}[];
+  projectID?: {};
+  title?: {};
+  difficulty?: {};
+  deadline?: {};
+  price?: {};
+  offer?: {};
+  skills?: {}[];
 }
 
 export function useRegisterJobSchema() {

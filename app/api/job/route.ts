@@ -12,8 +12,9 @@ export async function POST(req: Request, res: Response) {
     console.log("req body params ", jobSchemaData);
     const schema = constructSchema([
       ...jobSchemaData.skills,
-      jobSchemaData.deadline,
-      jobSchemaData.difficulty,
+      jobSchemaData.title,
+      jobSchemaData.price,
+      jobSchemaData.offer,
       jobSchemaData.projectID,
     ]);
     console.log("constructed schema ", schema);
@@ -23,10 +24,14 @@ export async function POST(req: Request, res: Response) {
     );
     // Wait for the transaction to be mined
     const schemaUID = await transaction.wait();
-
+    // TODO: fix foreign key constraint in job table
     await sql`
-      INSERT INTO "Job" ("title", "description", "freelancerId", "id") 
-      VALUES ('Testtitle', 'TestDescription', ${jobSchemaData.ownerAddress}, ${schemaUID})
+      INSERT INTO "Job" ("title", "description", "freelancerId", "id", "skills") 
+      VALUES (${jobSchemaData.title.name},
+        ${jobSchemaData.offer.name},
+        ${jobSchemaData.ownerAddress},
+        ${schemaUID},
+        ${JSON.stringify(jobSchemaData.skills.map((skill: any) => skill.name))})
       `;
 
     return NextResponse.json({ schemaUID });

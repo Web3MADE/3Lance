@@ -17,8 +17,8 @@ import {
   IJobSchemaData,
   useRegisterJobSchema,
 } from "../hooks/useRegisterJobSchema";
-
-export default function JobPosting() {
+/**@dev deprecated in place of PostFreelanceJob.tsx */
+export default function PostClientJob() {
   const { ready: isWalletReady, wallets } = useWallets();
   const { registerJobSchema, loading, error } = useRegisterJobSchema();
   const [difficulty, setDifficulty] = React.useState({

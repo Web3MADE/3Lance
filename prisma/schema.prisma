@@ -23,5 +23,7 @@ model Job {
     status      String   @default("open")
     freelancer  User     @relation(fields: [freelancerId], references: [id])
     freelancerId String  
+    skills      Json     @default("[]")
     createdAt   DateTime @default(now())
 }
+
