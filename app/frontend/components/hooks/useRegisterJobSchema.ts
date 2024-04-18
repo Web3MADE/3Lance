@@ -9,6 +9,7 @@ export interface IJobSchemaData {
   price?: {};
   offer?: {};
   skills?: {}[];
+  status?: {};
 }
 
 export function useRegisterJobSchema() {

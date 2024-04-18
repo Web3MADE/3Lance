@@ -26,13 +26,14 @@ export async function POST(req: Request, res: Response) {
     const schemaUID = await transaction.wait();
     // TODO: fix foreign key constraint in job table
     await sql`
-      INSERT INTO "Job" ("title", "description", "freelancerId", "id", "skills", "price") 
+      INSERT INTO "Job" ("title", "description", "freelancerId", "id", "skills", "price", "status") 
       VALUES (${jobSchemaData.title.name},
         ${jobSchemaData.offer.name},
         ${jobSchemaData.ownerAddress},
         ${schemaUID},
         ${JSON.stringify(jobSchemaData.skills.map((skill: any) => skill.name))},
-        ${jobSchemaData.price.name})
+        ${jobSchemaData.price.name}),
+        ${jobSchemaData.status.name}
       `;
 
     return NextResponse.json({ schemaUID });

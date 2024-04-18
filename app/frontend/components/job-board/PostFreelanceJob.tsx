@@ -21,6 +21,10 @@ export default function PostFreelanceJob() {
   const { ready: isWalletReady, wallets } = useWallets();
   const { registerJobSchema, loading, error } = useRegisterJobSchema();
 
+  const status = {
+    type: "string",
+    name: "open",
+  };
   const [title, setTitle] = useState({
     type: "string",
     name: "",
@@ -84,6 +88,7 @@ export default function PostFreelanceJob() {
       price: price,
       offer: offer,
       skills: skills,
+      status: status,
     };
     const uid = await registerJobSchema(jobSchemaData);
     console.log("uid ", uid);
