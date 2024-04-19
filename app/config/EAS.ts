@@ -4,7 +4,8 @@ import {
   SchemaRegistry,
 } from "@ethereum-attestation-service/eas-sdk";
 import { ethers } from "ethers";
-
+export const SEPOLIA_JOB_RESOLVER =
+  "0x8F62E3E65Ebd15A0EeED59eE178197c8c67De6E0";
 export const TEST_SEPOLIA_ADDRESS =
   "0x26a44E5bD991825Fe8AF2aa2E2e891E0926a37CC";
 export const SEPOLIA_EAS_ADDRESS = "0xC2679fBD37d54388Ce493F1DB75320D236e1815e";
@@ -48,20 +49,16 @@ export function getEAS(privateKey: string) {
 
 export async function registerSchema(privateKey: string, schema: string) {
   const schemaRegistry = new SchemaRegistry(schemaRegistryContractAddress);
-
   const provider = new ethers.JsonRpcProvider(
     "https://sepolia.infura.io/v3/4b3d75730534458fae28fd4746bdc560"
   );
   const signer = new ethers.Wallet(privateKey, provider);
 
   schemaRegistry.connect(signer);
-
-  const resolverAddress = "TODO RESOLVER LOGIC";
-  const revocable = true;
-
   const transaction = await schemaRegistry.register({
     schema,
-    revocable,
+    resolverAddress: SEPOLIA_JOB_RESOLVER,
+    revocable: true,
   });
 
   return transaction;
